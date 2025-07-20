@@ -1,22 +1,23 @@
 <?php
 session_start();
-require_once 'includes/db.php';
+require_once __DIR__ . '/includes/db.php'; 
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
     $pass = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT * FROM users WHERE email=?");
+    $stmt = $conn->prepare("SELECT * FROM users WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
 
+    // HARUS 1 hasil
     if ($result->num_rows === 1) {
         $user = $result->fetch_assoc();
 
         if (password_verify($pass, $user['password'])) {
             $_SESSION['user'] = $email;
-            header("Location: cari.php"); // arahkan ke halaman utama
+            header("Location: ./pages/cari.php");
             exit();
         }
     }
@@ -25,13 +26,15 @@ if (isset($_POST['login'])) {
 }
 ?>
 
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
     <meta charset="UTF-8">
     <title>Login Bengkel Online</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/style_login.css">
+    <link rel="stylesheet" href="../tugas_anjay/assets/css/style_login.css">
+    <link rel="stylesheet" href="../pusing_nyoo/assets/css/main.css">
 </head>
 <body>
 <div class="form-wrapper">
