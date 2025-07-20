@@ -1,0 +1,120 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(rgba(30, 30, 30, 0.85), rgba(0, 0, 0, 0.95));
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* FORM WRAPPER */
+.form-wrapper {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+/* BOX LOGIN (sama seperti daftar) */
+.login-box-kip {
+    background: rgba(44, 44, 44, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0, 180, 219, 0.2);
+    width: 360px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+/* JUDUL */
+.form-title {
+    color: #00b4db;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+/* LABEL */
+label {
+    display: block;
+    margin-top: 15px;
+    color: #ddd;
+    font-weight: 500;
+    font-size: 14px;
+    text-align: left;
+}
+
+/* INPUT */
+input {
+    width: 100%;
+    padding: 12px 15px;
+    margin-top: 6px;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 5px #00b4db;
+}
+
+/* TOMBOL */
+button {
+    margin-top: 25px;
+    width: 100%;
+    background: linear-gradient(to right, #00b4db, #007acc);
+    color: white;
+    padding: 12px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(to right, #007acc, #00b4db);
+}
+
+/* ERROR MESSAGE */
+.error-msg {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}
+
+/* LINK DAFTAR */
+.note {
+    margin-top: 20px;
+    font-size: 13px;
+    color: #ccc;
+}
+
+.note a {
+    color: #00b4db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.note a:hover {
+    text-decoration: underline;
+}

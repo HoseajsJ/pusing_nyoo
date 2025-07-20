@@ -1,0 +1,98 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Roboto', sans-serif;
+}
+
+body {
+    height: 100vh;
+    background: linear-gradient(rgba(30, 30, 30, 0.6), rgba(0, 0, 0, 0.85)),
+                url('../img/bg-bengkel.jpg') center/cover no-repeat;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.form-container {
+    background: rgba(44, 44, 44, 0.6);
+    backdrop-filter: blur(10px);
+    padding: 40px 30px;
+    border-radius: 20px;
+    box-shadow: 0 0 25px rgba(0, 180, 219, 0.2);
+    width: 360px;
+    text-align: center;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+h2 {
+    color: #00b4db;
+    margin-bottom: 25px;
+    font-size: 24px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 15px;
+    margin: 10px 0;
+    border: none;
+    border-radius: 8px;
+    background-color: rgba(255, 255, 255, 0.1);
+    color: #fff;
+    font-size: 14px;
+    transition: 0.3s;
+}
+
+input::placeholder {
+    color: #ccc;
+}
+
+input:focus {
+    outline: none;
+    background-color: rgba(255, 255, 255, 0.15);
+    box-shadow: 0 0 5px #00b4db;
+}
+
+button {
+    background: linear-gradient(to right, #00b4db, #007acc);
+    color: white;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    width: 100%;
+    margin-top: 15px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: linear-gradient(to right, #007acc, #00b4db);
+}
+
+p {
+    margin-top: 15px;
+    font-size: 14px;
+    color: #ccc;
+}
+
+a {
+    color: #00b4db;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+.error {
+    background-color: rgba(255, 0, 0, 0.1);
+    color: #ff4d4d;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 15px;
+    font-size: 14px;
+}

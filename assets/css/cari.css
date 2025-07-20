@@ -1,0 +1,243 @@
+/* assets/css/cari.css */
+
+/* --- RESET & GENERAL STYLES (bisa juga di style.css) --- */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Inter', sans-serif;
+}
+
+body {
+  min-height: 100vh;
+  /* Sesuaikan path gambar background Anda */
+  background: linear-gradient(rgba(255,255,255,0.4), rgba(255,255,255,0.7)),
+              url('../img/bg-bengkel.jpg') center/cover no-repeat;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding-bottom: 3rem;
+  color: #333;
+}
+
+/* --- HEADER SECTION --- */
+.header {
+  text-align: center;
+  background: rgba(0, 122, 204, 0.9); /* Warna biru untuk bagian atas */
+  color: white;
+  padding: 2rem 1rem;
+  width: 100%; /* MEMBUAT FULL KE PINGGIR */
+  /* max-width: 960px; <-- DIHAPUS agar full ke pinggir */
+  border-radius: 0; /* MEMBUAT SUDUT TIDAK MELENGKUNG */
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  margin-bottom: 1rem;
+}
+
+/* --- SLIDE MENU --- */
+.menu-toggle {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  font-size: 28px;
+  background: rgba(0,0,0,0.05);
+  border: none;
+  border-radius: 8px;
+  padding: 8px 12px;
+  cursor: pointer;
+  z-index: 1001;
+  color: #333; /* Warna ikon titik tiga */
+}
+
+.slide-menu {
+  position: fixed;
+  top: 0;
+  right: -250px; /* Tersembunyi di awal */
+  width: 250px;
+  height: 100%;
+  background: white;
+  box-shadow: -2px 0 10px rgba(0,0,0,0.2);
+  padding: 2rem 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  transition: right 0.3s ease; /* Transisi saat muncul/sembunyi */
+  z-index: 1000;
+}
+
+.slide-menu a {
+  text-decoration: none;
+  font-weight: bold;
+  color: #007acc;
+  padding: 0.6rem 1rem;
+  border-radius: 8px;
+  background: rgba(0,122,204,0.05);
+}
+
+.slide-menu a:hover {
+  background: rgba(0,122,204,0.1);
+}
+
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.3);
+  display: none; /* Tersembunyi di awal */
+  z-index: 999;
+}
+
+/* --- SEARCH SECTION --- */
+.search-wrapper {
+  width: 100%;
+  max-width: 960px;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 2rem;
+  padding: 0 1rem; /* Padding agar tidak terlalu mepet di mobile */
+}
+
+.search-wrapper form {
+  display: flex;
+  flex-wrap: wrap; /* Agar bisa wrap di layar kecil */
+  gap: 0.75rem;
+  justify-content: center;
+  width: 100%; /* Mengisi lebar search-wrapper */
+}
+
+.search-input,
+.search-select {
+  padding: 0.6rem 1rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  width: calc(50% - 0.375rem); /* Setengah lebar dengan gap */
+  max-width: 280px; /* Batasi lebar maksimum */
+  background: rgba(255,255,255,0.9);
+}
+
+.search-btn {
+  padding: 0.6rem 1.5rem;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(to right, #00b4db, #007acc);
+  color: white;
+  font-weight: bold;
+  cursor: pointer;
+  transition: 0.3s;
+  width: 100%; /* Full width di mobile */
+  max-width: 200px; /* Batasi lebar maksimum */
+}
+
+.search-btn:hover {
+  background: linear-gradient(to right, #007acc, #00b4db);
+}
+
+/* --- GRID CONTAINER (Daftar Bengkel) --- */
+.grid-container {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 2rem; /* Jarak antar kartu */
+  justify-content: center;
+  max-width: 1080px; /* Lebar maksimum container */
+  padding: 1rem;
+}
+
+.card {
+  background: rgba(255, 255, 255, 0.6);
+  border-radius: 16px;
+  backdrop-filter: blur(10px); /* Efek blur untuk background kartu */
+  padding: 1rem;
+  width: 280px; /* Lebar tetap untuk setiap kartu */
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+  position: relative; /* Penting untuk positioning tombol love */
+  transition: transform 0.3s ease;
+  overflow: hidden; /* Pastikan konten tidak keluar */
+}
+
+.card:hover {
+  transform: translateY(-6px);
+}
+
+.card img.bengkel-img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover; /* Gambar akan mengisi area tanpa terdistorsi */
+  border-radius: 12px;
+  margin-bottom: 1rem;
+}
+
+.card h3 {
+  font-size: 1.2rem;
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  color: #333;
+}
+
+.card p {
+  font-size: 0.95rem;
+  color: #444;
+  margin-bottom: 0.75rem;
+}
+
+/* --- TOMBOL BOOKING (Booking Button) --- */
+.btn-book {
+  display: block; /* Membuat tombol menjadi elemen blok */
+  margin: 0.75rem auto 0 auto; /* Tengah secara horizontal, ada sedikit margin atas */
+  padding: 0.5rem 1rem;
+  background: linear-gradient(to right, #00b4db, #007acc);
+  color: white;
+  text-decoration: none;
+  border-radius: 10px;
+  font-weight: 500;
+  transition: 0.3s;
+  width: fit-content; /* Lebar menyesuaikan konten */
+  text-align: center; /* Teks di tengah tombol */
+}
+
+.btn-book:hover {
+  background: linear-gradient(to right, #007acc, #00b4db);
+}
+
+/* --- TOMBOL FAVORIT (Love Button) --- */
+.btn-favorite {
+  background: none;
+  border: none;
+  font-size: 22px; /* Ukuran ikon */
+  color: #ccc; /* Warna default (abu-abu/kosong) */
+  cursor: pointer;
+  position: absolute; /* Posisi absolut di dalam .card (relative) */
+  top: 12px;
+  right: 12px;
+  transition: color 0.3s ease, transform 0.2s ease; /* Transisi warna dan sedikit efek klik */
+  z-index: 10; /* Pastikan di atas gambar */
+  padding: 5px; /* Sedikit padding agar mudah diklik */
+  border-radius: 50%; /* Membuat area klik bulat */
+}
+
+.btn-favorite:hover {
+    transform: scale(1.1); /* Sedikit membesar saat hover */
+}
+
+.btn-favorite.active {
+  color: red; /* Warna merah saat aktif */
+  transform: scale(1.1); /* Tetap membesar sedikit saat aktif */
+}
+
+/* --- RESPONSIVENESS --- */
+@media (max-width: 768px) {
+  .search-input,
+  .search-select {
+    width: 100%; /* Full width di layar kecil */
+    max-width: none;
+  }
+  .search-btn {
+    width: 100%; /* Full width di layar kecil */
+    max-width: none;
+  }
+  .card {
+    width: 100%; /* Kartu menjadi full width di layar kecil */
+    max-width: 320px; /* Batasi lebar maksimum kartu agar tidak terlalu lebar di tablet */
+  }
+}
