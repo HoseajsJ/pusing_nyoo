@@ -4,8 +4,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Detail Booking</title>
-  <link rel="stylesheet" href="../css/booking.css">
-  <link rel="stylesheet" href="../css/main.css">
+  <link rel="stylesheet" href="../assets/css/booking.css">
+  <link rel="stylesheet" href="../assets/css/main.css">
   <link href="https://fonts.googleapis.com/css2?family=Segoe+UI&display=swap" rel="stylesheet">
 </head>
 <body>
@@ -22,10 +22,10 @@
       </div>
 
       <div class="btn-group">
-        <a href="index.php" class="btn">Kembali ke Beranda</a>
+        <a href="../index.php" class="btn">Kembali ke Beranda</a>
         <a href="hapus_booking.php?id=123" class="btn danger">Batalkan Booking</a>
       </div>
     </div>
   </div>
 </body>
-</html>
+</html>     
