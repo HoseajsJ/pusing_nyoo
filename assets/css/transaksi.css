@@ -10,14 +10,14 @@ body {
   color: #fff;
 }
 
-/* Container Form */
+/* Container Form - diperlebar */
 .form-container {
   background: rgba(30, 30, 30, 0.95);
-  padding: 30px;
-  width: 320px;
+  padding: 35px;
+  width: 450px; /* awalnya 320px, sekarang diperlebar */
   border-radius: 12px;
   text-align: center;
-  box-shadow: 0 0 15px rgba(0, 200, 255, 0.2);
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
 }
 
 /* Judul */
@@ -26,15 +26,11 @@ body {
   margin-bottom: 20px;
 }
 
-/* Form Input */
-.form-group {
-  margin-bottom: 15px;
-}
-
+/* Semua input dan select */
 .form-container input,
 .form-container select {
   width: 100%;
-  padding: 10px;
+  padding: 12px;
   border: none;
   outline: none;
   border-radius: 6px;
@@ -43,10 +39,16 @@ body {
   font-size: 14px;
 }
 
+/* Group biasa */
+.form-group {
+  margin-bottom: 20px;
+}
+
 /* Tombol Submit */
 button {
   width: 100%;
-  padding: 12px;
+  padding: 20px;
+  margin-top: 15px;
   border: none;
   border-radius: 6px;
   background: linear-gradient(90deg, #00d4ff, #0078ff);
@@ -72,4 +74,14 @@ button:hover {
 }
 .info a:hover {
   text-decoration: underline;
+}
+
+/* ✅ Form tanggal & waktu sejajar */
+.form-row {
+  display: flex;
+  gap: 10px; /* jarak antar input */
+}
+
+.form-row input {
+  flex: 1; /* supaya lebar sama */
 }

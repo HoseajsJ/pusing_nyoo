@@ -33,8 +33,7 @@ if (isset($_POST['login'])) {
     <meta charset="UTF-8">
     <title>Login Bengkel Online</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../tugas_anjay/assets/css/style_login.css">
-    <link rel="stylesheet" href="../pusing_nyoo/assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
 </head>
 <body>
 <div class="form-wrapper">

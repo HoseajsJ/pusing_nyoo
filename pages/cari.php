@@ -10,8 +10,11 @@ if (!isset($_SESSION['user'])) {
     header('Location: ../index.php');
     exit();
 }
-?>
 
+// ✅ Ambil semua bengkel dari database
+$sql = "SELECT workshop_id, name, address, image FROM bengkel";
+$result = $conn->query($sql);
+?>
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -23,6 +26,7 @@ if (!isset($_SESSION['user'])) {
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
+  <!-- MENU SLIDE -->
   <button class="menu-toggle" onclick="toggleMenu()">&#8942;</button>
   <div class="slide-menu" id="slideMenu">
     <a href="cari.php">🏠 Home</a>
@@ -31,14 +35,16 @@ if (!isset($_SESSION['user'])) {
   </div>
   <div class="overlay" onclick="toggleMenu()" id="overlay"></div>
 
+  <!-- HEADER -->
   <header class="header">
     <h1>🔧 Cari Bengkel</h1>
     <p>Temukan bengkel terpercaya untuk kendaraanmu</p>
   </header>
 
+  <!-- SEARCH -->
   <div class="search-wrapper">
     <form method="GET">
-      <input type="text" name="keyword" placeholder="Cari layanan..." class="search-input">
+      <input type="text" name="keyword" placeholder="Cari bengkel..." class="search-input">
       <select name="kategori" class="search-select">
         <option value="">Semua Kategori</option>
         <option value="Mobil">Mobil</option>
@@ -49,33 +55,38 @@ if (!isset($_SESSION['user'])) {
     </form>
   </div>
 
+  <!-- GRID CARD -->
   <div class="grid-container">
-    <!-- CARD MANUAL 1 -->
-    <div class="card">
-      <img src="../assets/img/bengkel1.jpg" alt="Bengkel Jaya Motor" class="bengkel-img">
-      <button class="btn-favorite"><i class="far fa-heart"></i></button>
-      <h3>Bengkel Jaya Motor</h3>
-      <p>📍 Jl. Merdeka No.12, Jakarta</p>
-      <a href="booking.php?id=1" class="btn-book">💳 Booking</a>
-    </div>
+    <?php
+    if ($result && $result->num_rows > 0) {
+        while ($row = $result->fetch_assoc()) {
+            $id     = $row['workshop_id'];
+            $nama   = $row['name'];
+            $alamat = $row['address'];
 
-    <!-- CARD MANUAL 2 -->
-    <div class="card">
-      <img src="../assets/img/bengkel2.jpg" alt="Bengkel Andalan" class="bengkel-img">
-      <button class="btn-favorite"><i class="far fa-heart"></i></button>
-      <h3>Bengkel Andalan</h3>
-      <p>📍 Jl. Soekarno-Hatta No.88, Bandung</p>
-      <a href="booking.php?id=2" class="btn-book">💳 Booking</a>
-    </div>
+            // ✅ tentukan nama file gambar
+            $gambarFile = !empty($row['image']) ? $row['image'] : 'default.jpg';
+            $gambarPath = "../assets/img/" . $gambarFile;
 
-    <!-- CARD MANUAL 3 -->
-    <div class="card">
-      <img src="../assets/img/bengkel3.jpg" alt="Auto Service Center" class="bengkel-img">
-      <button class="btn-favorite"><i class="far fa-heart"></i></button>
-      <h3>Auto Service Center</h3>
-      <p>📍 Jl. Gatot Subroto No.45, Surabaya</p>
-      <a href="booking.php?id=3" class="btn-book">💳 Booking</a>
-    </div>
+            // ✅ jika file tidak ada, fallback ke default
+            if (!file_exists($gambarPath)) {
+                $gambarPath = "../assets/img/default.jpg";
+            }
+
+            echo '
+            <div class="card">
+              <img src="'.$gambarPath.'" alt="'.$nama.'" class="bengkel-img">
+              <button class="btn-favorite"><i class="far fa-heart"></i></button>
+              <h3>'.$nama.'</h3>
+              <p>📍 '.$alamat.'</p>
+              <a href="booking.php?id='.$id.'" class="btn-book">💳 Booking</a>
+            </div>
+            ';
+        }
+    } else {
+        echo '<p>Tidak ada bengkel tersedia.</p>';
+    }
+    ?>
   </div>
 
   <script src="../assets/js/cari.js"></script>

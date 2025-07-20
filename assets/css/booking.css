@@ -75,6 +75,81 @@ body {
   .btn.danger:hover {
     background: #cc0000;
   }
+
+  /* Container utama */
+.booking-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+/* Card lebih lebar untuk 2 kolom */
+.booking-card {
+  display: flex;              /* ✅ jadi 2 kolom */
+  gap: 20px;
+  width: 700px;               /* ✅ dilebarkan */
+  background: rgba(30, 30, 30, 0.95);
+  padding: 20px;
+  border-radius: 12px;
+  box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
+}
+
+/* Kolom kiri: gambar */
+.booking-image {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.booking-image img {
+  width: 100%;
+  aspect-ratio: 1 / 1;        /* ✅ gambar tetap kotak */
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+/* Kolom kanan: detail */
+.booking-detail {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  color: #fff;
+}
+
+.booking-detail h2 {
+  color: #00d4ff;
+  margin-bottom: 10px;
+}
+
+/* Tombol */
+.btn-group {
+  margin-top: 15px;
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  flex: 1;
+  padding: 10px;
+  background: linear-gradient(90deg, #00d4ff, #0078ff);
+  color: #fff;
+  text-decoration: none;
+  border-radius: 6px;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.btn.danger {
+  background: linear-gradient(90deg, #ff4b4b, #d10000);
+}
+
+.btn:hover {
+  opacity: 0.9;
+}
+
   
 
 
