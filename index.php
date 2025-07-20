@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db.php';
+require_once 'includes/db.php';
 
 if (isset($_POST['login'])) {
     $email = $_POST['email'];
@@ -46,7 +46,7 @@ if (isset($_POST['login'])) {
             <input type="password" name="password" id="password" placeholder="Masukkan password" required>
 
             <button type="submit" name="login">Login</button>
-            <p class="note">Belum punya akun? <a href="daftar.php">Daftar di sini</a></p>
+            <p class="note">Belum punya akun? <a href="pages/daftar.php">Daftar di sini</a></p>
         </form>
     </div>
 </div>

@@ -1,6 +1,6 @@
 <?php
 session_start();
-require_once '../includes/db.php'; 
+require_once '/includes/db.php'; 
 
 // Redirect jika pengguna belum login
 if (!isset($_SESSION['user'])) {
