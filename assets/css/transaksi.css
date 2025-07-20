@@ -1,0 +1,75 @@
+/* Background gradient gelap */
+body {
+  margin: 0;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: linear-gradient(180deg, #2c2c2c, #111);
+  font-family: Arial, sans-serif;
+  color: #fff;
+}
+
+/* Container Form */
+.form-container {
+  background: rgba(30, 30, 30, 0.95);
+  padding: 30px;
+  width: 320px;
+  border-radius: 12px;
+  text-align: center;
+  box-shadow: 0 0 15px rgba(0, 200, 255, 0.2);
+}
+
+/* Judul */
+.form-container h2 {
+  color: #00d4ff;
+  margin-bottom: 20px;
+}
+
+/* Form Input */
+.form-group {
+  margin-bottom: 15px;
+}
+
+.form-container input,
+.form-container select {
+  width: 100%;
+  padding: 10px;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  background: #444;
+  color: #fff;
+  font-size: 14px;
+}
+
+/* Tombol Submit */
+button {
+  width: 100%;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  background: linear-gradient(90deg, #00d4ff, #0078ff);
+  color: white;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+button:hover {
+  opacity: 0.9;
+}
+
+/* Link info */
+.info {
+  margin-top: 15px;
+  font-size: 14px;
+}
+
+.info a {
+  color: #00d4ff;
+  text-decoration: none;
+}
+.info a:hover {
+  text-decoration: underline;
+}
