@@ -12,7 +12,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
     } else {
         $query = "INSERT INTO users (nama, email, password) VALUES ('$nama', '$email', '$password')";
         if (mysqli_query($conn, $query)) {
-            echo "<script>alert('Pendaftaran berhasil! Silakan login.'); window.location='login.php';</script>";
+          echo "<script>alert('Pendaftaran berhasil! Silakan login.'); window.location='../index.php';</script>";
         } else {
             $error = "Gagal daftar: " . mysqli_error($conn);
         }
