@@ -74,7 +74,7 @@ if (!isset($_SESSION['user'])) {
             <td>Rp${parseInt(item.price).toLocaleString('id-ID')}</td>
             <td>${item.status}</td>
             <td class="aksi-btn">
-              <a href="edit.php?id=${item.booking_id}">Edit</a> |
+              <a href="edit.php?booking_id=${item.booking_id}">Edit</a>|
               <a href="hapus.php?id=${item.booking_id}" onclick="return confirm('Yakin ingin menghapus booking ini?')">Hapus</a>
             </td>
           `;
