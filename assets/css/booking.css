@@ -1,155 +1,77 @@
 body {
-    margin: 0;
-    font-family: 'Segoe UI', sans-serif;
-    background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
-    color: #fff;
-  }
-  
-  .booking-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-  }
-  
-  .booking-card {
-    background: rgba(255, 255, 255, 0.05);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    backdrop-filter: blur(10px);
-    padding: 30px;
-    border-radius: 20px;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.3);
-    text-align: center;
-    max-width: 400px;
-    width: 90%;
-  }
-  
-  .icon {
-    font-size: 48px;
-    margin-bottom: 20px;
-  }
-  
-  h2 {
-    margin-bottom: 10px;
-    font-size: 24px;
-    color: #00ffcc;
-  }
-  
-  .bengkel-info {
-    margin: 20px 0;
-    text-align: left;
-  }
-  
-  .bengkel-info p {
-    margin: 8px 0;
-  }
-  
-  .btn-group {
-    margin-top: 20px;
-    display: flex;
-    gap: 15px;
-    flex-wrap: wrap;
-    justify-content: center;
-  }
-  
-  .btn {
-    background: #00ffcc;
-    color: #000;
-    padding: 10px 20px;
-    border: none;
-    border-radius: 10px;
-    text-decoration: none;
-    transition: 0.3s ease;
-    font-weight: bold;
-  }
-  
-  .btn:hover {
-    background: #00bfa6;
-    transform: translateY(-2px);
-  }
-  
-  .btn.danger {
-    background: #ff4d4d;
-  }
-  
-  .btn.danger:hover {
-    background: #cc0000;
-  }
-
-  /* Container utama */
-.booking-container {
+  margin: 0;
+  font-family: 'Inter', sans-serif;
+  background: url('../img/bg-bengkel.jpg') no-repeat center center fixed;
+  background-size: cover;
+  color: #f2f2f2;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
 }
 
-/* Card lebih lebar untuk 2 kolom */
+.booking-container {
+  backdrop-filter: blur(10px);
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 20px;
+  padding: 30px;
+  max-width: 800px;
+  width: 90%;
+  box-shadow: 0 0 30px rgba(0, 255, 255, 0.3);
+}
+
 .booking-card {
-  display: flex;              /* ✅ jadi 2 kolom */
-  gap: 20px;
-  width: 700px;               /* ✅ dilebarkan */
-  background: rgba(30, 30, 30, 0.95);
-  padding: 20px;
-  border-radius: 12px;
-  box-shadow: 0 0 20px rgba(0, 200, 255, 0.2);
-}
-
-/* Kolom kiri: gambar */
-.booking-image {
-  flex: 1;
   display: flex;
-  justify-content: center;
+  flex-direction: row;
+  gap: 30px;
   align-items: center;
 }
 
 .booking-image img {
-  width: 100%;
-  aspect-ratio: 1 / 1;        /* ✅ gambar tetap kotak */
+  width: 260px;
+  height: 180px;
+  border-radius: 15px;
   object-fit: cover;
-  border-radius: 10px;
-}
-
-/* Kolom kanan: detail */
-.booking-detail {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  color: #fff;
+  box-shadow: 0 0 15px rgba(0,0,0,0.6);
 }
 
 .booking-detail h2 {
-  color: #00d4ff;
-  margin-bottom: 10px;
+  margin-bottom: 15px;
+  color: #00fff7;
+  font-size: 1.8rem;
 }
 
-/* Tombol */
+.booking-detail p {
+  margin: 8px 0;
+  font-size: 1rem;
+}
+
 .btn-group {
-  margin-top: 15px;
-  display: flex;
-  gap: 10px;
+  margin-top: 20px;
 }
 
 .btn {
-  flex: 1;
-  padding: 10px;
-  background: linear-gradient(90deg, #00d4ff, #0078ff);
-  color: #fff;
+  display: inline-block;
+  padding: 10px 25px;
+  background: #00b7eb;
+  color: white;
+  border: none;
+  border-radius: 10px;
   text-decoration: none;
-  border-radius: 6px;
-  text-align: center;
-  transition: 0.3s;
-}
-
-.btn.danger {
-  background: linear-gradient(90deg, #ff4b4b, #d10000);
+  font-weight: 600;
+  transition: background 0.3s, transform 0.2s;
+  margin-right: 10px;
 }
 
 .btn:hover {
-  opacity: 0.9;
+  background: #00a1cc;
+  transform: scale(1.05);
 }
 
-  
+.btn.danger {
+  background: #e74c3c;
+}
 
-
+.btn.danger:hover {
+  background: #c0392b;
+}

@@ -1,0 +1,36 @@
+aksi-btn a {
+    margin: 0 5px;
+    text-decoration: none;
+    color: #007bff;
+  }
+  .aksi-btn a:hover {
+    text-decoration: underline;
+  }
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+  }
+  table, th, td {
+    border: 1px solid #ddd;
+  }
+  th, td {
+    padding: 12px;
+    text-align: left;
+  }
+  th {
+    background-color:rgb(0, 0, 0);
+  }
+  .back-btn {
+    margin-top: 30px;
+  }
+
+  .alert {
+    background-color: #d4edda;
+    color: #155724;
+    padding: 12px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    border: 1px solid #c3e6cb;
+    font-weight: bold;
+}

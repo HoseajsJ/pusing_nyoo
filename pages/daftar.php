@@ -39,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == "POST") {
         <input type="email" name="email" placeholder="Email" required>
         <input type="password" name="password" placeholder="Password" required>
         <button type="submit">Daftar</button>
-        <p>Sudah punya akun? <a href="index.php">Login di sini</a></p>
+        <p>Sudah punya akun? <a href="../index.php">Login di sini</a></p>
     </form>
 </div>
 </body>

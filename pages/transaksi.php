@@ -1,156 +1,142 @@
 <?php
-// Aktifkan error reporting
-ini_set('display_errors', 1);
-ini_set('display_startup_errors', 1);
-error_reporting(E_ALL);
-
-// Include file koneksi database
+session_start();
 require_once '../includes/db.php';
 
-// Cek koneksi database
-if (!$conn) {
-    die("Koneksi database gagal: " . mysqli_connect_error());
+// ✅ Pastikan user login
+if (!isset($_SESSION['user'])) {
+    header('Location: ../index.php');
+    exit();
+}
+
+// ✅ Ambil workshop_id dari URL
+$workshop_id = isset($_GET['workshop_id']) ? intval($_GET['workshop_id']) : 0;
+if ($workshop_id <= 0) {
+    header("Location: cari.php");
+    exit;
+}
+
+// ✅ Ambil detail bengkel
+$queryBengkel = "SELECT name, address FROM bengkel WHERE workshop_id = $workshop_id";
+$resultBengkel = mysqli_query($conn, $queryBengkel);
+$bengkel = mysqli_fetch_assoc($resultBengkel);
+
+// ✅ Kalau bengkel tidak ditemukan
+if (!$bengkel) {
+    echo "<h2 style='color:red;'>Bengkel tidak ditemukan. <a href='cari.php'>Kembali</a></h2>";
+    exit;
+}
+
+// ✅ Ambil semua layanan di bengkel ini
+$queryService = "SELECT service_id, service_name, price FROM services WHERE workshop_id = $workshop_id";
+$resultService = mysqli_query($conn, $queryService);
+$services = [];
+if ($resultService && mysqli_num_rows($resultService) > 0) {
+    while ($row = mysqli_fetch_assoc($resultService)) {
+        $services[] = $row;
+    }
+}
+
+// ✅ Jika form booking disubmit
+if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    $service_id     = intval($_POST['service_id']);
+    $booking_date   = $_POST['booking_date'];
+    $booking_time   = $_POST['booking_time'];
+    $customer_name  = mysqli_real_escape_string($conn, $_POST['customer_name']);
+    $customer_phone = mysqli_real_escape_string($conn, $_POST['customer_phone']);
+
+    // ✅ Ambil user_id dari session (langsung atau lewat email)
+    if (is_array($_SESSION['user']) && isset($_SESSION['user']['user_id'])) {
+        $user_id = $_SESSION['user']['user_id'];
+    } else {
+        // Jika session hanya email → cari user_id dari tabel users
+        $email = mysqli_real_escape_string($conn, $_SESSION['user']);
+        $res = $conn->query("SELECT user_id FROM users WHERE email='$email' LIMIT 1");
+        if ($res && $res->num_rows > 0) {
+            $user_id = $res->fetch_assoc()['user_id'];
+        } else {
+            die("❌ User tidak ditemukan di tabel users!");
+        }
+    }
+
+    // ✅ Insert ke bookings jika semua data lengkap
+    if ($workshop_id && $service_id && $booking_date && $booking_time) {
+        $stmt = $conn->prepare("
+            INSERT INTO bookings (user_id, workshop_id, service_id, booking_date, booking_time, status)
+            VALUES (?, ?, ?, ?, ?, 'pending')
+        ");
+        $stmt->bind_param("iiiss", $user_id, $workshop_id, $service_id, $booking_date, $booking_time);
+        $stmt->execute();
+
+        // ✅ Setelah sukses booking → redirect ke Riwayat Booking
+        header("Location: riwayat.php");
+        exit();
+    } else {
+        echo "<p style='color:red;'>❌ Data booking tidak lengkap!</p>";
+    }
 }
 ?>
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Transaksi Booking</title>
+  <title>Form Booking</title>
+  <link rel="stylesheet" href="../assets/css/main.css">
   <link rel="stylesheet" href="../assets/css/transaksi.css">
 </head>
 <body>
   <div class="form-container">
-    <h2>Form Transaksi</h2>
-    <form action="booking.php" method="POST" id="bookingForm">
-      
-      <!-- Pilih Bengkel -->
+    <h1>Booking di <?= htmlspecialchars($bengkel['name']); ?></h1>
+    <p>📍 <?= htmlspecialchars($bengkel['address']); ?></p>
+
+    <!-- ✅ Form submit ke halaman ini sendiri -->
+    <form action="" method="POST" class="booking-form">
+      <input type="hidden" name="workshop_id" value="<?= $workshop_id; ?>">
+
       <div class="form-group">
-        <label for="workshopSelect">Pilih Bengkel</label>
-        <select name="workshop_id" id="workshopSelect" required>
-          <option value="">-- Pilih Bengkel --</option>
-          <?php
-            $queryBengkel = "SELECT workshop_id, name FROM bengkel WHERE status = 'active'";
-            $resultBengkel = mysqli_query($conn, $queryBengkel);
-            
-            if(mysqli_num_rows($resultBengkel) > 0){
-              while($row = mysqli_fetch_assoc($resultBengkel)){
-                echo "<option value='".htmlspecialchars($row['workshop_id'])."'>".htmlspecialchars($row['name'])."</option>";
-              }
-            } else {
-              echo "<option value='' disabled>Tidak ada bengkel tersedia</option>";
-            }
-          ?>
+        <label for="service_id">Pilih Layanan</label>
+        <select name="service_id" id="service_id" required>
+          <option value="">-- Pilih Layanan --</option>
+          <?php if (!empty($services)): ?>
+            <?php foreach ($services as $s): ?>
+              <option value="<?= $s['service_id']; ?>">
+                <?= htmlspecialchars($s['service_name']); ?> - Rp <?= number_format($s['price'], 0, ',', '.'); ?>
+              </option>
+            <?php endforeach; ?>
+          <?php else: ?>
+            <option value="" disabled>Tidak ada layanan tersedia</option>
+          <?php endif; ?>
         </select>
       </div>
 
-      <!-- Pilih Service -->
       <div class="form-group">
-        <label for="serviceSelect">Pilih Layanan</label>
-        <select name="service_id" id="serviceSelect" required disabled>
-          <option value="">-- Pilih bengkel terlebih dahulu --</option>
-        </select>
-      </div>
-
-      <!-- Tanggal + Waktu -->
-      <div class="form-row">
-        <div class="form-group">
-          <label for="bookingDate">Tanggal Booking</label>
-          <input type="date" name="booking_date" id="bookingDate" required min="<?php echo date('Y-m-d'); ?>">
-        </div>
-        <div class="form-group">
-          <label for="bookingTime">Waktu Booking</label>
-          <input type="time" name="booking_time" id="bookingTime" required min="08:00" max="17:00">
-        </div>
-      </div>
-
-      <!-- Informasi Pelanggan -->
-      <div class="form-group">
-        <label for="customerName">Nama Pelanggan</label>
-        <input type="text" name="customer_name" id="customerName" required>
+        <label for="booking_date">Tanggal Booking</label>
+        <input type="date" name="booking_date" id="booking_date" required min="<?= date('Y-m-d'); ?>">
       </div>
 
       <div class="form-group">
-        <label for="customerPhone">Nomor Telepon</label>
-        <input type="tel" name="customer_phone" id="customerPhone" required>
+        <label for="booking_time">Waktu Booking</label>
+        <input type="time" name="booking_time" id="booking_time" required min="08:00" max="17:00">
       </div>
 
-      <!-- Tombol Submit -->
-      <button type="submit" class="submit-btn">Buat Booking</button>
+      <div class="form-group">
+        <label for="customer_name">Nama Pelanggan</label>
+        <input type="text" name="customer_name" id="customer_name" required>
+      </div>
 
-      <p class="info">Lihat <a href="riwayat.php">Riwayat Transaksi</a></p>
+      <div class="form-group">
+        <label for="customer_phone">Nomor Telepon</label>
+        <input type="tel" name="customer_phone" id="customer_phone" required>
+      </div>
+
+      <button type="submit" class="btn-submit">✅ Konfirmasi Booking</button>
+      <p><a href="riwayat.php" class="back-link">📋 Lihat Riwayat Booking</a></p>
     </form>
   </div>
 
-  <!-- AJAX Script -->
   <script>
-  document.addEventListener("DOMContentLoaded", function() {
-      const workshopSelect = document.getElementById("workshopSelect");
-      const serviceSelect = document.getElementById("serviceSelect");
-      const bookingForm = document.getElementById("bookingForm");
-      
-      // Format tanggal default ke hari ini
-      document.getElementById('bookingDate').valueAsDate = new Date();
-
-      // Handle perubahan bengkel
-      workshopSelect.addEventListener("change", function() {
-          const workshopId = this.value;
-          
-          if (!workshopId) {
-              serviceSelect.innerHTML = '<option value="">-- Pilih bengkel terlebih dahulu --</option>';
-              serviceSelect.disabled = true;
-              return;
-          }
-          
-          serviceSelect.innerHTML = '<option value="">Memuat layanan...</option>';
-          serviceSelect.disabled = false;
-          
-          fetch('get_services.php?workshop_id=' + workshopId)
-              .then(response => {
-                  if (!response.ok) {
-                      throw new Error('Network response was not ok');
-                  }
-                  return response.json();
-              })
-              .then(data => {
-                  if (data && data.length > 0) {
-                      let options = '<option value="">-- Pilih Layanan --</option>';
-                      data.forEach(service => {
-                          options += `<option value="${service.service_id}">${service.service_name} - Rp ${service.price.toLocaleString()}</option>`;
-                      });
-                      serviceSelect.innerHTML = options;
-                  } else {
-                      serviceSelect.innerHTML = '<option value="">Tidak ada layanan tersedia</option>';
-                  }
-              })
-              .catch(error => {
-                  console.error('Error:', error);
-                  serviceSelect.innerHTML = '<option value="">Gagal memuat layanan</option>';
-              });
-      });
-
-      // Validasi form sebelum submit
-      bookingForm.addEventListener("submit", function(e) {
-          const selectedDate = new Date(document.getElementById('bookingDate').value);
-          const today = new Date();
-          today.setHours(0, 0, 0, 0);
-          
-          if (selectedDate < today) {
-              e.preventDefault();
-              alert('Tanggal booking tidak boleh di masa lalu');
-              return false;
-          }
-          
-          if (!serviceSelect.value) {
-              e.preventDefault();
-              alert('Silakan pilih layanan');
-              return false;
-          }
-          
-          return true;
-      });
-  });
+    document.addEventListener("DOMContentLoaded", function(){
+      document.getElementById('booking_date').valueAsDate = new Date();
+    });
   </script>
 </body>
 </html>

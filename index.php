@@ -34,6 +34,7 @@ if (isset($_POST['login'])) {
     <title>Login Bengkel Online</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../pusing_nyoo/assets/css/style_login.css">
 </head>
 <body>
 <div class="form-wrapper">

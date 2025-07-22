@@ -11,7 +11,7 @@ if (!isset($_SESSION['user'])) {
     exit();
 }
 
-// ✅ Ambil semua bengkel dari database
+// Ambil semua bengkel dari database
 $sql = "SELECT workshop_id, name, address, image FROM bengkel";
 $result = $conn->query($sql);
 ?>
@@ -24,14 +24,19 @@ $result = $conn->query($sql);
   <link rel="stylesheet" href="../assets/css/cari.css">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <style>
+    body.custom-bg {
+      background: url('../assets/img/4045rlys.png') no-repeat center center fixed;
+      background-size: cover;
+    }
+  </style>
 </head>
-<body>
+<body class="custom-bg">
   <!-- MENU SLIDE -->
-  <button class="menu-toggle" onclick="toggleMenu()">&#8942;</button>
+  <button class="menu-toggle" onclick="toggleMenu()">⋮</button>
   <div class="slide-menu" id="slideMenu">
     <a href="cari.php">🏠 Home</a>
-    <a href="transaksi.php">📋 Transaksi</a>
-    <a href="../logout.php">🚪 Logout</a>
+    <a href="../pages/logout.php">🚪 Logout</a>
   </div>
   <div class="overlay" onclick="toggleMenu()" id="overlay"></div>
 
@@ -40,20 +45,6 @@ $result = $conn->query($sql);
     <h1>🔧 Cari Bengkel</h1>
     <p>Temukan bengkel terpercaya untuk kendaraanmu</p>
   </header>
-
-  <!-- SEARCH -->
-  <div class="search-wrapper">
-    <form method="GET">
-      <input type="text" name="keyword" placeholder="Cari bengkel..." class="search-input">
-      <select name="kategori" class="search-select">
-        <option value="">Semua Kategori</option>
-        <option value="Mobil">Mobil</option>
-        <option value="Motor">Motor</option>
-        <option value="Mobil & Motor">Mobil & Motor</option>
-      </select>
-      <button type="submit" class="search-btn">Cari</button>
-    </form>
-  </div>
 
   <!-- GRID CARD -->
   <div class="grid-container">
@@ -64,11 +55,9 @@ $result = $conn->query($sql);
             $nama   = $row['name'];
             $alamat = $row['address'];
 
-            // ✅ tentukan nama file gambar
             $gambarFile = !empty($row['image']) ? $row['image'] : 'default.jpg';
             $gambarPath = "../assets/img/" . $gambarFile;
 
-            // ✅ jika file tidak ada, fallback ke default
             if (!file_exists($gambarPath)) {
                 $gambarPath = "../assets/img/default.jpg";
             }
@@ -76,10 +65,21 @@ $result = $conn->query($sql);
             echo '
             <div class="card">
               <img src="'.$gambarPath.'" alt="'.$nama.'" class="bengkel-img">
+              <div class="card-content">
+                <h3>'.$nama.'</h3>
+                <p><i class="fa fa-map-marker-alt"></i> '.$alamat.'</p>
+                <p><i class="fa fa-clock"></i> Buka: 08.00 - 17.00</p>
+                <div class="rating">⭐⭐⭐⭐☆</div>
+                <div class="tags">
+                  <span class="tag">🔧 Servis</span>
+                  <span class="tag">🛠️ Tambal Ban</span>
+                  <span class="tag">🚗 Mobil</span>
+                  <span class="tag">🧽 Cuci Mobil</span>
+                  <span class="tag">🔋 Aki</span>
+                </div>
+                <a href="booking.php?id='.$id.'" class="btn-book">💳 Booking</a>
+              </div>
               <button class="btn-favorite"><i class="far fa-heart"></i></button>
-              <h3>'.$nama.'</h3>
-              <p>📍 '.$alamat.'</p>
-              <a href="booking.php?id='.$id.'" class="btn-book">💳 Booking</a>
             </div>
             ';
         }
