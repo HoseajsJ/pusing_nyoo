@@ -38,7 +38,6 @@ if (!isset($_SESSION['user'])) {
         </tr>
       </thead>
       <tbody id="riwayat-body">
-        <!-- AJAX isi di sini -->
       </tbody>
     </table>
 
