@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <button type="submit" class="btn-submit">✅ Konfirmasi Booking</button>
-      <p><a href="riwayat.php" class="btn-submit">📋 Lihat Riwayat Booking</a></p>
+      <button onclick="location.href='riwayat.php'" class="btn-submit">📋 Lihat Riwayat Booking</button>
     </form>
   </div>
 

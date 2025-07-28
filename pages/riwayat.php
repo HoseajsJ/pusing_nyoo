@@ -78,7 +78,7 @@ if (!isset($_SESSION['user'])) {
             <td>${item.status}</td>
             <td class="aksi-btn">
               <a href="edit.php?booking_id=${item.booking_id}" class="btn-edit">Edit</a> |
-              <a href="hapus.php?id=${item.booking_id}" class="btn-hapus" onclick="return confirm('Yakin ingin menghapus booking ini?')">Hapus</a>
+              <a href="hapus.php?id=${item.booking_id}" class="btn-hapus" onclick="return confirm('Yakin ingin menghapus booking ini? ${item.service_name} pada ${tanggalBooking}')">Hapus</a>
             </td>
           `;
 
