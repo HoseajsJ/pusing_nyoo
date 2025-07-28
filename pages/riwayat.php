@@ -13,6 +13,7 @@ if (!isset($_SESSION['user'])) {
     </div>
     <?php unset($_SESSION['message']); ?>
 <?php endif; ?>
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -29,7 +30,6 @@ if (!isset($_SESSION['user'])) {
     <table>
       <thead>
         <tr>
-          <th>ID</th>
           <th>Nama Layanan</th>
           <th>Tanggal</th>
           <th>Harga</th>
@@ -37,8 +37,7 @@ if (!isset($_SESSION['user'])) {
           <th>Aksi</th>
         </tr>
       </thead>
-      <tbody id="riwayat-body">
-      </tbody>
+      <tbody id="riwayat-body"></tbody>
     </table>
 
     <p id="no-data" style="display:none; text-align:center; margin-top:20px;">
@@ -51,42 +50,46 @@ if (!isset($_SESSION['user'])) {
   </div>
 
   <script>
-  document.addEventListener('DOMContentLoaded', () => {
-    fetch('../ajax/get_riwayat.php')
-      .then(res => {
+    document.addEventListener('DOMContentLoaded', async () => {
+      const tbody = document.getElementById('riwayat-body');
+      const noData = document.getElementById('no-data');
+
+      try {
+        const res = await fetch('../ajax/get_riwayat.php');
         if (!res.ok) throw new Error('Gagal ambil data');
-        return res.json();
-      })
-      .then(data => {
-        const tbody = document.getElementById('riwayat-body');
+
+        const data = await res.json();
+
         if (!data || data.length === 0) {
-          document.getElementById('no-data').style.display = 'block';
+          noData.style.display = 'block';
           return;
         }
 
         data.forEach(item => {
           const tr = document.createElement('tr');
+
+          const tanggalBooking = new Date(item.booking_date).toLocaleDateString('id-ID') + ' ' + item.booking_time;
+          const hargaFormatted = 'Rp' + parseInt(item.price).toLocaleString('id-ID');
+
           tr.innerHTML = `
-            <td>${item.booking_id}</td>
             <td>${item.service_name}</td>
-            <td>${new Date(item.booking_date).toLocaleDateString('id-ID')} ${item.booking_time}</td>
-            <td>Rp${parseInt(item.price).toLocaleString('id-ID')}</td>
+            <td>${tanggalBooking}</td>
+            <td>${hargaFormatted}</td>
             <td>${item.status}</td>
             <td class="aksi-btn">
-              <a href="edit.php?booking_id=${item.booking_id}">Edit</a>|
-              <a href="hapus.php?id=${item.booking_id}" onclick="return confirm('Yakin ingin menghapus booking ini?')">Hapus</a>
+              <a href="edit.php?booking_id=${item.booking_id}" class="btn-edit">Edit</a> |
+              <a href="hapus.php?id=${item.booking_id}" class="btn-hapus" onclick="return confirm('Yakin ingin menghapus booking ini?')">Hapus</a>
             </td>
           `;
+
           tbody.appendChild(tr);
         });
-      })
-      .catch(err => {
+      } catch (err) {
         console.error(err);
-        const noData = document.getElementById('no-data');
         noData.textContent = 'Gagal memuat data.';
         noData.style.display = 'block';
-      });
-  });
+      }
+    });
   </script>
 </body>
 </html>

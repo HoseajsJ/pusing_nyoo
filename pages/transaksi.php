@@ -20,11 +20,11 @@ $queryBengkel = "SELECT name, address FROM bengkel WHERE workshop_id = $workshop
 $resultBengkel = mysqli_query($conn, $queryBengkel);
 $bengkel = mysqli_fetch_assoc($resultBengkel);
 
-// ✅ Kalau bengkel tidak ditemukan
-if (!$bengkel) {
-    echo "<h2 style='color:red;'>Bengkel tidak ditemukan. <a href='cari.php'>Kembali</a></h2>";
-    exit;
-}
+// // ✅ Kalau bengkel tidak ditemukan
+// if (!$bengkel) {
+//     echo "<h2 style='color:red;'>Bengkel tidak ditemukan. <a href='cari.php'>Kembali</a></h2>";
+//     exit;
+// }
 
 // ✅ Ambil semua layanan di bengkel ini
 $queryService = "SELECT service_id, service_name, price FROM services WHERE workshop_id = $workshop_id";
@@ -129,7 +129,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
       </div>
 
       <button type="submit" class="btn-submit">✅ Konfirmasi Booking</button>
-      <p><a href="riwayat.php" class="back-link">📋 Lihat Riwayat Booking</a></p>
+      <p><a href="riwayat.php" class="btn-submit">📋 Lihat Riwayat Booking</a></p>
     </form>
   </div>
 
